@@ -131,7 +131,7 @@ angular.module('HCAlpha.controllers', [])
     $scope.toggled = function(open) {
       $log.log('Dropdown is now: ', open);
     };
-
+    //this
     $scope.toggleDropdown = function($event) {
       $event.preventDefault();
       $event.stopPropagation();
