@@ -1,0 +1,39 @@
+<div class="container container-fluid" ng-init="getPatients(1)">
+    <header id="top" class="header navbar-fixed-top" style="background-color:#fff">  
+        <div class="container">            
+            <h1 class="logo pull-left">
+                <a>
+                    <img id="logo-image" class="logo-image" src="img/A1.png" alt="Logo" width="195">
+                </a>
+            </h1><!--//logo-->              
+            <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button><!--//nav-toggle-->
+                </div><!--//navbar-header-->            
+                <div class="navbar-collapse collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <form class="navbar-form inNav" role="search">
+                            <div class="nav navbar-nav btn-group" dropdown is-open="status.isopen">
+                                <label>Search: </label>
+                                <a class="dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                                    <input type="text" placeholder="Search" ng-model="selectedPatient"  ng-click="toggleDropdown($event)"
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="item" ng-repeat="p in patients"><a ng-click="manageThisPatient(p)">{{p.objectId}}</li>
+                                </ul>
+                                
+                            </div>
+                            <button class="btn btn-default" ng-click="manageThisPatient(selectedPatient)">Search</button>
+                        </form>
+                    </ul><!--//nav-->
+                </div><!--//navabr-collapse-->
+            </nav><!--//main-nav-->           
+        </div>
+    </header><!--//header-->
+    <div style="margin-top:8%" ui-view></div>
+</div>

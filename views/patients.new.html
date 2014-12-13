@@ -1,0 +1,24 @@
+<div class="row" ng-controller="patientManageCtrl">
+	<div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+    		    <li role="presentation" class="active"><a href="#recommended" aria-controls="recommended" role="tab" data-toggle="tab">Recommended</a></li>
+    		    <li role="presentation"><a href="#injuryRelated" aria-controls="injuryRelated" role="tab" data-toggle="tab">Injury Related</a></li>
+    		    <li role="presentation"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All</a></li>
+  		</ul>
+        <!-- Tab panes -->
+  		<div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="recommended">
+                <ul>
+                    <li ng-repeat="x in excercises">{{x.name}}<button type="button" class="btn btn-primary" ng-click="open(x.objectId)">Launch demo modal</button></li>
+                </ul>
+            </div>
+		    <div role="tabpanel" class="tab-pane" id="injuryRelated">
+                ...
+            </div>
+		    <div role="tabpanel" class="tab-pane" id="all">
+                ...
+            </div>
+		</div>
+    </div>
+</div>

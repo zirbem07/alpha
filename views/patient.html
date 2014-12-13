@@ -1,0 +1,48 @@
+<nav class="navbar navbar-default navbar-static" role="navigation">
+<div class="container">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#" style="padding:0px; margin:0px">
+            <img src="./img/A1.png" height="40px" style="padding:0px; margin:0px">
+        </a>
+    </div>
+    <div class="nav navbar-nav navbar-right btn-group" dropdown is-open="status.isopen">
+        <a class="dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+            dropdown <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+</div>
+</nav>
+
+<section id="excerciseCards" class="container-fluid">
+    <div class="row">
+        <cardflow model="cardflowSnapKinetic" mode="swipeSnapKinetic" current="0" >
+            <div class="cardflow-card"
+                 ng-repeat="exercise in exercises"
+                 style=" margin: 15px;"
+                 ng-click="coverClick({{exercise}})"
+                 >
+                <img ng-click="coverClick({{exercise}})" src="{{exercise.attributes.img}}" height="400" width="400" class="img-responsive">
+            </div>
+        </cardflow>
+        <br />
+        <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current-1"
+                ng-disabled="cardflowSnapKinetic.current <= 0"
+                class="btn btn-circle btn-lg btn-default btn-left">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </button>
+        <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current+1"
+                ng-disabled="cardflowSnapKinetic.current >= (cards.length-1)"
+                class="btn btn-circle btn-lg btn-default pull-right btn-right">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </button>
+        <br />
+        <br />
+    </div>
+</section>

@@ -1,0 +1,47 @@
+<div ng-init="getData()">    
+    <div class="modal-header">
+        <center><h3 class="modal-title">{{excercise.name}}<a class="pull-right glyphicon glyphicon-remove" ng-click="dismiss()"><a></h3></center>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <center><img ng-src="http://img.youtube.com/vi/{{imgID}}/0.jpg" height="25%"></center>
+        </div>
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2 panel-heading">
+                        {{excercise.weightBand}}
+                    </div>
+                    <div class="col-md-2 panel-heading">
+                        Reps
+                    </div>
+                    <div class="col-md-2 panel-heading">
+                        Sets
+                    </div>
+                    <div class="col-md-5 panel-heading">
+                        Comments
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2 panel-body">
+                        <input type="text" ng-model="excercise.lbsColor">
+                    </div>
+                    <div class="col-md-2 panel-body">
+                        <input type="text" ng-model="excercise.reps">
+                    </div>
+                    <div class="col-md-2 panel-body">
+                        <input type="text" ng-model="excercise.sets">
+                    </div>
+                    <div class="col-md-5 panel-body">
+                        <input type="textArea" placeholder="Add Comments!">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+    </div>
+</div>

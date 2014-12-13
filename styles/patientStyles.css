@@ -1,0 +1,27 @@
+.btn-circle {
+    border-radius: 100%;
+    border: 1px solid black;
+}
+.btn-circle:hover {
+    border: 1px solid #7a3fa8;
+    color: #7a3fa8;
+    background-color: white;
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.btn-left {
+    margin-left: 4%;
+}
+.btn-right {
+    margin-right: 4%;
+}
+#excerciseCards{
+    background-color: #f5f5f5;
+}
+.navbar{
+    margin-bottom: 0;
+    border-bottom: 1px solid grey;
+}
