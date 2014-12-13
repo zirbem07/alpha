@@ -47,7 +47,12 @@ angular.module('HCAlpha',
       .state('patient', {
         url: '/patient',
         templateUrl: 'views/patient.html',
-        controller: 'PatientCtrl'
+        controller: 'PatientCtrl',
+        resolve: {
+          exercises: function (Patient) {
+            return Patient.getExercises();
+          }
+        }
       });
 
     // if none of the above states are matched, use this as the fallback
