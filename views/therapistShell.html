@@ -1,4 +1,4 @@
-<div class="container container-fluid" ng-init="getPatients(1)">
+<div class="container container-fluid" ng-init="getPatients(1); go()">
     <header id="top" class="header navbar-fixed-top" style="background-color:#fff">  
         <div class="container">            
             <h1 class="logo pull-left">
@@ -21,10 +21,10 @@
                             <div class="nav navbar-nav btn-group" dropdown is-open="status.isopen">
                                 <label>Search: </label>
                                 <a class="dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-                                    <input type="text" placeholder="Search" ng-model="selectedPatient"  ng-click="toggleDropdown($event)"
+                                    <input type="text" placeholder="Search" ng-model="selectedPatient"  ng-click="toggleDropdown($event)">
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li class="item" ng-repeat="p in patients"><a ng-click="manageThisPatient(p)">{{p.objectId}}</li>
+                                    <li class="item" ng-repeat="p in patients"><a ng-click="manageThisPatient(p)">{{p.objectId}}</a></li>
                                 </ul>
                                 
                             </div>

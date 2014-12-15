@@ -10,9 +10,20 @@
 .dropdown-menu.item > li {
   z-index: 1001;
 }
-.tabList{
-	padding-left: 0;
-	padding-right: 0;
-	padding-bottom: 10;
-	padding-top: 10;
+.addToTabs{
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 12;
+    padding-bottom: 12;
+}
+.theTabs{
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.exTab{
+
+}
+.aexTab{
+    margin: 0px;
 }

@@ -27,5 +27,13 @@ angular.module('HCAlpha.services', [])
   return {};
 })
 .factory("addedExercise",function(){
-  return {};
+  var dailyExercises = [];
+        return{
+            theExercises : function () {
+                return dailyExercises;
+            },
+            push : function (modalExercise) {
+                dailyExercises.push(modalExercise);
+            }
+        };
 });

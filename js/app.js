@@ -11,7 +11,8 @@ angular.module('HCAlpha',
     'ParseServices',
     'parse-angular',
     'ui.bootstrap',
-    'ui.bootstrap.tpls'
+    'ui.bootstrap.tpls',
+    'HCAlpha.filters'
   ])
   .run(['ParseSDK', function(ParseService){
 

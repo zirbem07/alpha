@@ -1,6 +1,6 @@
 <div ng-init="getData()">    
     <div class="modal-header">
-        <center><h3 class="modal-title">{{excercise.name}}<a class="pull-right glyphicon glyphicon-remove" ng-click="dismiss()"><a></h3></center>
+        <center><h3 class="modal-title">{{exercise.name}}<a class="pull-right glyphicon glyphicon-remove" ng-click="dismiss()"><a></h3></center>
     </div>
     <div class="modal-body">
         <div class="row">
@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2 panel-heading">
-                        {{excercise.weightBand}}
+                        {{exercise.weightBand}}
                     </div>
                     <div class="col-md-2 panel-heading">
                         Reps
@@ -26,13 +26,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2 panel-body">
-                        <input type="text" ng-model="excercise.lbsColor">
+                        <input type="text" ng-model="exercise.lbsColor">
                     </div>
                     <div class="col-md-2 panel-body">
-                        <input type="text" ng-model="excercise.reps">
+                        <input type="text" ng-model="exercise.reps">
                     </div>
                     <div class="col-md-2 panel-body">
-                        <input type="text" ng-model="excercise.sets">
+                        <input type="text" ng-model="exercise.sets">
                     </div>
                     <div class="col-md-5 panel-body">
                         <input type="textArea" placeholder="Add Comments!">
