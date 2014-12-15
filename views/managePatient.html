@@ -1,28 +1,66 @@
-<div class="row">
-    <div role="tabpanel" class="col-md-5 well well-sm">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs row" role="tablist" style="margin-right:5px;margin-left:5px">
-            <li role="presentation" class="active"><a class="col-md-12" href="#recommended" aria-controls="recommended" role="tab" data-toggle="tab">Recommended</a></li>
-            <li role="presentation"><a class="col-md-12" href="#injuryRelated" aria-controls="injuryRelated" role="tab" data-toggle="tab">Injury Related</a></li>
-            <li role="presentation"><a class="col-md-8" href="#all" aria-controls="all" role="tab" data-toggle="tab">All</a></li>
-            <li role="presentation" class="col-md-4"><input class="col-md-10" type="text" ng-model="searchedExercise" placeholder="Search"><a class='glyphicon glyphicon-search pull-right'></a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="recommended">
-                <ul>
-                    <li ng-repeat="x in excercises">{{x.name}}<button type="button" class="btn btn-primary" ng-click="open(x)">Launch demo modal</button></li>
-                </ul>
+<div class="row" ng-mouseup="mouseUp()">
+    <tabset class="col-md-8 well well-sm theTabs">
+        <tab heading="Justified">
+            <div>
+                <div class="row">
+                    <div ng-repeat="x in exercises" class="col-md-4 well well-sm exTab">
+                        <div ng-mousedown='mouseDown(x)'>
+                            <img ng-src="{{x.img}}" class="col-md-4" style="padding:0px;" ng-click="addExercise(x)">
+                            <div class=" col-md-8">
+                                <div class="col-md-4" style="padding:0px;">Name</div><br>
+                                <div class="col-md-12" style="padding:0px;">{{x.name}}</div>
+                            </div>
+                            <div class="col-md-12" style="background-color: #7a3fa8">
+                                <span class="col-md-3">{{x.weightBand}}</span>
+                                <span class="col-md-3">Reps</span>
+                                <span class="col-md-3">Sets</span>
+                                <span class="col-md-3">Hold</span>
+                            </div>
+                            <div class="col-md-12">
+                                <span class="col-md-3">{{x.lbsColor}}</span>
+                                <span class="col-md-3">{{x.reps}}</span>
+                                <span class="col-md-3">{{x.sets}}</span>
+                                <span class="col-md-3">Hold</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="injuryRelated">
-                ...
+        </tab>
+        <tab heading="Injury Related">
+
+        </tab>
+        <tab heading="All">
+
+        </tab>
+        <input type="text"><a class="glyphicon glyphicon-search"></a>
+    </tabset>
+    <tabset class="col-md-3 col-md-offset-1 well well-sm theTabs">
+        <tab heading="Assigned" id="current">
+            <div>
+                <div ng-repeat="x in addedExercise | reverse" class="col-md-12 well well-sm aexTab">
+                    <img ng-src="{{x.img}}" class="col-md-4" style="padding:0px;">
+                    <div class=" col-md-8">
+                        <div class="col-md-4" style="padding:0px;">Name</div><br>
+                        <div class="col-md-12" style="padding:0px;">{{x.name}}</div>
+                    </div>
+                    <div class="col-md-12" style="background-color: #7a3fa8">
+                        <span class="col-md-3">Band</span>
+                        <span class="col-md-3">Reps</span>
+                        <span class="col-md-3">Sets</span>
+                        <span class="col-md-3">Hold</span>
+                    </div>
+                    <div class="col-md-12">
+                        <span class="col-md-3">{{x.lbsColor}}</span>
+                        <span class="col-md-3">{{x.reps}}</span>
+                        <span class="col-md-3">{{x.sets}}</span>
+                        <span class="col-md-3">Hold</span>
+                    </div>
+                </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="all">
-                ...
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-md-offset-1 well well-sm">
-        
-    </div>
+        </tab>
+        <tab heading="Completed">
+
+        </tab>
+    </tabset>
 </div>

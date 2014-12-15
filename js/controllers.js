@@ -199,12 +199,9 @@ angular.module('HCAlpha.controllers', [])
   })
   .controller('therapistCtrl', function($scope, $state, user) {
     $scope.patients = [];
-    //pass the selected patients object to a factory
-    //pass that object to the patientManage controller
     $scope.go = function(){
       $state.go("therapist.viewPatients");
     };
-    $scope.go();
 
     $scope.getPatients = function(id){
       var clinicID = 1;
@@ -222,8 +219,7 @@ angular.module('HCAlpha.controllers', [])
     };
 
     $scope.manageThisPatient = function(patient){
-      $scope.user = user;
-      $scope.user.patient = patient
+      user.patient = patient;
       $state.go("therapist.managePatient");
     };
 
@@ -279,18 +275,20 @@ angular.module('HCAlpha.controllers', [])
         }
       }
   })
-  .controller('patientManageCtrl', function($scope, $state, $modal, $log, user) {
-    $scope.user = user;
-    $scope.patient = $scope.user.patient;
-    $scope.excercises = [];
-    $scope.addedExcercise = [];
+  .controller('patientManageCtrl', function($scope, $state, $modal, $log, $interval, user, addedExercise) {
+    $scope.patient = user.patient;
+    console.log($scope.patient);
+    $scope.weeklyExercise = [];
 
-    $scope.getExcercises = function() {
+    $scope.exercises = [];
+    $scope.addedExercise = addedExercise.theExercises();
+
+    $scope.getExercise = function() {
       var query = new Parse.Query("Exercise");
       query.find({
         success: function (results) {
           for (var i = 0; i < results.length; i++) {
-            $scope.excercises.push(results[i].toJSON());
+            $scope.exercises.push(results[i].toJSON());
           }
         },
         error: function (error) {
@@ -299,20 +297,34 @@ angular.module('HCAlpha.controllers', [])
       });
     };
 
-    $scope.getExcercises();
+    $scope.getWeeklyExercise = function(){
+        var date = $scope.patient.createdAt.substr(0,10);
+
+    }
+
+    $scope.getWeeklyExercise();
+    $scope.getExercise();
+
+    $scope.addExercise = function(x){
+        addedExercise.push(x);
+    }
 
     $scope.open = function (exercise) {
+      $interval.cancel($scope.promise);
       var imgArr = exercise.url.split("=");
       var imgID = imgArr[1];
       var modalInstance = $modal.open({
         templateUrl: 'views/excerciseModal.html',
         controller: 'modalCtrl',
         resolve: {
-          excercise: function () {
+          exercise: function () {
             return exercise;
           },
           urlID: function () {
             return imgID;
+          },
+          patientObj: function () {
+            return $scope.patient;
           }
         }
       });
@@ -322,15 +334,39 @@ angular.module('HCAlpha.controllers', [])
       });
     };
 
-    //$scope.open("1");
+        var promise;
+        var i = 0;
+
+        $scope.mouseDown = function (x) {
+            if(i == 0) {
+                i++;
+                promise = $interval(function () {
+                    $scope.openIt(x);
+                    $interval.cancel(promise);
+                }, 1500);
+            }
+
+        };
+
+        $scope.mouseUp = function () {
+            i = 0;
+            $interval.cancel(promise);
+
+        };
+
+        $scope.openIt = function (x) {
+            if(i == 1){
+                i = 0;
+                $scope.open(x);
+            }
+        };
 
   })
-  .controller('modalCtrl', function($scope, $state, $modalInstance, excercise, urlID, user) {
-    $scope.user = user;
-    $scope.patient = $scope.user.patient;
+  .controller('modalCtrl', function($scope, $state, $modalInstance, exercise, urlID, patientObj, addedExercise) {
+    $scope.patient = patientObj;
 
-    $scope.excercise = excercise;
-
+    $scope.exercise = exercise;
+    
     $scope.imgID = urlID;
 
     $scope.ok = function () {
@@ -338,23 +374,38 @@ angular.module('HCAlpha.controllers', [])
       var AssignedExercise = Parse.Object.extend("AssignedExercise");
       var assignedExercise = new AssignedExercise();
 
-      assignedExercise.set("lbsColor", $scope.excercise.lbsColor);
-      assignedExercise.set("reps", parseInt($scope.excercise.reps));
-      assignedExercise.set("sets", parseInt($scope.excercise.sets));
-      assignedExercise.set("name", $scope.excercise.name);
-      assignedExercise.set("level", $scope.excercise.level);
+      assignedExercise.set("lbsColor", $scope.exercise.lbsColor);
+      assignedExercise.set("reps", parseInt($scope.exercise.reps));
+      assignedExercise.set("sets", parseInt($scope.exercise.sets));
+      assignedExercise.set("name", $scope.exercise.name);
+      assignedExercise.set("level", $scope.exercise.level);
       assignedExercise.set("userID", $scope.patient.objectId);
-      assignedExercise.set("img", $scope.excercise.img);
-      assignedExercise.set("type", $scope.excercise.type);
-      assignedExercise.set("url", $scope.excercise.url);
-      assignedExercise.set("weightBand", $scope.excercise.weightBand);
+      assignedExercise.set("img", $scope.exercise.img);
+      assignedExercise.set("type", $scope.exercise.type);
+      assignedExercise.set("url", $scope.exercise.url);
+      assignedExercise.set("weightBand", $scope.exercise.weightBand);
 
       assignedExercise.save();
 
-      $scope.createExcercise();
-
-      $scope.dismiss();
+      $scope.assignExercise();
     };
+
+    $scope.assignExercise = function () {
+      var exerciseToAssign = {};
+        exerciseToAssign.lbsColor = $scope.exercise.lbsColor;
+        exerciseToAssign.reps = parseInt($scope.exercise.reps);
+        exerciseToAssign.sets = parseInt($scope.exercise.sets);
+        exerciseToAssign.name = $scope.exercise.name;
+        exerciseToAssign.level = $scope.exercise.level;
+        exerciseToAssign.img = $scope.exercise.img;
+        exerciseToAssign.type = $scope.exercise.type;
+        exerciseToAssign.url = $scope.exercise.url;
+        exerciseToAssign.weightBand = $scope.exercise.weightBand;
+
+        addedExercise.push(exerciseToAssign);
+
+        $scope.dismiss();
+    }
 
     $scope.dismiss = function () {
       $modalInstance.dismiss('cancel');
