@@ -5,7 +5,7 @@
     overflow:hidden;
     width: 92%;
     left: 4%;
-    height: 240px;
+    height: 180px;
 }
 
 .cardflow-container {
@@ -40,8 +40,8 @@
     float:left;
     margin-right: 10px;
 
-    /*width: 500px;*/
-    height: 20px;
+    width: 400px;
+    height: 200px;
 
     text-align: center;
     line-height:200px;
@@ -149,7 +149,7 @@ http://webdesign.tutsplus.com/tutorials/cross-browser-css-reflections-glows-and-
 
 
 cardflow .cardflow-wrapper {
-    height: 300px;
+    height: 220px;
     padding-top: 10px;
 }
 

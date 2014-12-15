@@ -19,30 +19,31 @@
     </div>
 </div>
 </nav>
-
-<section id="excerciseCards" class="container-fluid">
-    <div class="row">
-        <cardflow model="cardflowSnapKinetic" mode="swipeSnapKinetic" current="0" >
-            <div class="cardflow-card"
-                 ng-repeat="exercise in exercises"
-                 style=" margin: 15px;"
-                 ng-click="coverClick({{exercise}})"
-                 >
-                <img ng-click="coverClick({{exercise}})" src="{{exercise.attributes.img}}" height="400" width="400" class="img-responsive">
-            </div>
-        </cardflow>
-        <br />
-        <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current-1"
-                ng-disabled="cardflowSnapKinetic.current <= 0"
-                class="btn btn-circle btn-lg btn-default btn-left">
-            <i class="glyphicon glyphicon-chevron-left"></i>
-        </button>
-        <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current+1"
-                ng-disabled="cardflowSnapKinetic.current >= (cards.length-1)"
-                class="btn btn-circle btn-lg btn-default pull-right btn-right">
-            <i class="glyphicon glyphicon-chevron-right"></i>
-        </button>
-        <br />
-        <br />
+  <cardflow model="cardflowSnapPage" mode="swipeSnapPage" class="page" style="margin: 15px">
+    <div class="cardflow-card" ng-repeat="card in cards track by $index" ng-click="coverClick(card, $index)" style="background-image: url( {{card.attributes.img}} );">
+      {{ card.title }}
     </div>
-</section>
+  </cardflow>
+  <div class="row">
+    <div class="col-md-4">
+      <button ng-click="cardflowSnapPage.current=cardflowSnapPage.current-cardflowSnapPage.pageSize"
+              class="btn btn-circle btn-lg btn-default btn-left"
+              ng-disabled="cardflowSnapPage.current <= 0"
+          >
+        <i class="glyphicon glyphicon-chevron-left"></i>
+      </button>
+    </div>
+    <div class="title  col-md-4">
+      <h2 style="color: white; text-align: center; padding-bottom: 15px"> Your Exercises</h2>
+    </div>
+    <div class="col-md-4">
+      <button ng-click="cardflowSnapPage.current=cardflowSnapPage.current+cardflowSnapPage.pageSize"
+              ng-disabled="cardflowSnapPage.current >= (cards.length-cardflowSnapPage.pageSize)"
+              class="btn btn-circle btn-lg btn-default pull-right btn-right">
+        <i class="glyphicon glyphicon-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div google-chart chart="chartObject"></div>
+  </div>

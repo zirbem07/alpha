@@ -11,13 +11,17 @@ angular.module('HCAlpha',
     'ParseServices',
     'parse-angular',
     'ui.bootstrap',
-    'ui.bootstrap.tpls'
+    'ui.bootstrap.tpls',
+    'googlechart'
   ])
   .run(['ParseSDK', function(ParseService){
 
   }])
-  .config(function($stateProvider, $urlRouterProvider) {
-
+  .config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+      'self',
+      '*://www.youtube.com/**'
+    ]);
 
     $stateProvider
       .state('home', {
@@ -51,6 +55,9 @@ angular.module('HCAlpha',
         resolve: {
           exercises: function (Patient) {
             return Patient.getExercises();
+          },
+          completedExercises: function(Patient) {
+            return Patient.getCompletedExercises();
           }
         }
       });

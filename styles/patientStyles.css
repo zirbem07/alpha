@@ -25,3 +25,16 @@
     margin-bottom: 0;
     border-bottom: 1px solid grey;
 }
+.btn-exit{
+    border-radius: 100%;
+    background-color: white;
+}
+.selected{
+    border: 2px solid #00FF00;
+    border-radius: 100%;
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}

@@ -40,60 +40,163 @@ angular.module('HCAlpha.controllers', [])
 
         }
     })
-    .controller('PatientCtrl', function($scope,$state, Patient, exercises, $log){
-        $scope.handle = {};
+    .controller('PatientCtrl', function($scope,$state,$modal, Patient, exercises,completedExercises){
+      $scope.handle = {};
 
-        $scope.patient = Patient;
-        $scope.exercises = exercises;
-        console.log(exercises);
+      $scope.patient = Patient;
+      $scope.cards = exercises;
+      $scope.completedExercises = completedExercises;
+      $scope.cardflowSnapPage = {};
 
-        $scope.cards = [
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'},
-          {image:'http://placekitten.com/g/400/400', title: 't'}
-        ];
+      $scope.coverClick = function(cover, index){
+        console.log(cover);
+        cover.index = index;
+        $scope.open(cover);
+      };
 
-        $scope.cardflowNone = {};
-        $scope.cardflowSnapOne = {};
-        $scope.cardflowSnap = {};
-        $scope.cardflowSnapPage = {};
-        $scope.cardflowSnapKinetic = {};
-        $scope.cardflowNonePage = {};
-        $scope.cardflowSwipe = {};
+      $scope.$on('complete', function(event, data){
+        $scope.cards.splice(data.index, 1);
+      });
 
-        $scope.coverClick = function(cover){
-          alert("called");
-            console.log(cover);
+      $scope.open = function (cover) {
+
+        var modalInstance = $modal.open({
+          templateUrl: 'views/doExerciseModal.html',
+          controller: 'doExerciseModalCtrl',
+          size: 'lg',
+          resolve: {
+            exercise: function () {
+              return cover;
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+          console.log('Modal dismissed at: ' + new Date());
+        });
+      };
+
+      $scope.chartObject = {
+        type: "LineChart",
+        options : {
+          'title': 'Your Recovery Progress'
+        }
+      };
+
+      $scope.createGraphData = function(){
+        var sum = 0;
+        var date = $scope.completedExercises[0].attributes.date;
+        $scope.rows = [];
+        angular.forEach($scope.completedExercises, function(e){
+          if(e.attributes.date != date) {
+            //do not create object
+            $scope.rows.push({c: [{v: date},{v: sum}]});
+          }
+          date = e.attributes.date;
+          sum += e.attributes.progress;
+          console.log($scope.rows);
+        });
+        $scope.rows.push({c: [{v: date},{v: sum}]});
+        $scope.chartObject.data = {
+          "cols": [
+            {id: "t", label: "Date", type: "string"},
+            {id: "s", label: "Progress", type: "number"}
+          ], "rows": $scope.rows
         };
+        console.log($scope.chartObject);
+      }();
+//        $scope.status = {
+//            isopen: false
+//        };
+//
+//        $scope.toggled = function(open) {
+//            $log.log('Dropdown is now: ', open);
+//        };
+//
+//        $scope.toggleDropdown = function($event) {
+//            $event.preventDefault();
+//            $event.stopPropagation();
+//            $scope.status.isopen = !$scope.status.isopen;
+//        };
 
-        $scope.status = {
-            isopen: false
-        };
 
-        $scope.toggled = function(open) {
-            $log.log('Dropdown is now: ', open);
-        };
-
-        $scope.toggleDropdown = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.status.isopen = !$scope.status.isopen;
-        };
     })
+  .controller('doExerciseModalCtrl',
+  function($scope, $state, $modalInstance, $rootScope, exercise, Patient){
+
+    $scope.exercise = exercise;
+
+    $scope.happy = "plain";
+    $scope.mid = "plain";
+    $scope.sad = "plain";
+
+
+    $scope.selectPain = function(type){
+
+     if(type == 'happy') {
+       $scope.happy = "selected";
+       $scope.mid = "plain";
+       $scope.sad = "plain";
+       $scope.selected = 1;
+     } else if(type == 'mid') {
+       $scope.happy = "plain";
+       $scope.mid = "selected";
+       $scope.sad = "plain";
+       $scope.selected = .5;
+     } else if(type == 'sad') {
+       $scope.happy = "plain";
+       $scope.mid = "plain";
+       $scope.sad = "selected";
+       $scope.selected = 0.1;
+     }
+    };
+
+    $scope.ok = function(){
+
+      if($scope.selected){
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if(dd<10){
+          dd='0'+dd
+        }
+        if(mm<10){
+          mm='0'+mm
+        }
+        today = dd+'/'+mm+'/'+yyyy;
+
+
+        var params = {
+          _userID: $scope.exercise.attributes.userID,
+          _comments: $scope.comments || "",
+          _pain: $scope.selected,
+          _difficulty: $scope.exercise.attributes.level,
+          _progress: $scope.exercise.attributes.level * $scope.selected,
+          _date: today,
+          _name: $scope.exercise.attributes.name,
+          _url: $scope.exercise.attributes.url,
+          _img: $scope.exercise.attributes.img,
+          _id: $scope.exercise.attributes.id
+        };
+
+        Patient.completeExercise(params);
+        //TODO: remove from exercises array and delete from assigned exercises.
+
+        $rootScope.$broadcast('complete',{index: $scope.exercise.index});
+        $modalInstance.dismiss('cancel');
+      } else {
+        alert("You must select a pain level");
+      }
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+  })
   .controller('therapistCtrl', function($scope, $state, user) {
     $scope.patients = [];
     //pass the selected patients object to a factory
@@ -122,7 +225,7 @@ angular.module('HCAlpha.controllers', [])
       $scope.user = user;
       $scope.user.patient = patient
       $state.go("therapist.managePatient");
-    }
+    };
 
     $scope.status = {
       isopen: false
@@ -215,7 +318,7 @@ angular.module('HCAlpha.controllers', [])
       });
 
       modalInstance.result.then(function () {
-        $log.info('Modal dismissed at: ' + new Date());
+        console.log('Modal dismissed at: ' + new Date());
       });
     };
 

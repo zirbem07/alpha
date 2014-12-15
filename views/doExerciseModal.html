@@ -1,0 +1,59 @@
+<div class="modal-header">
+  <h3 class="modal-title" style="text-align: center">
+    {{exercise.attributes.name}}
+    <button class="pull-right btn btn-exit" ng-click="cancel()">
+      <i class="pull-right glyphicon glyphicon-remove"></i>
+    </button>
+  </h3>
+</div>
+<div class="modal-body">
+  <iframe width="100%" height="420px" src="{{exercise.attributes.url}}" frameborder="0" allowfullscreen></iframe>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-4 panel-body">
+        <strong>LBS Color: </strong> {{exercise.attributes.lbsColor}}
+      </div>
+      <div class="col-md-4 panel-body">
+        <strong>Reps: </strong>{{exercise.attributes.reps}}
+      </div>
+      <div class="col-md-4 panel-body">
+        <strong>Sets: </strong>{{exercise.attributes.sets}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-6 panel-body">
+        <div class="row">
+          <h3>Pain Level:</h3>
+        </div>
+        <div class="row">
+          <br />
+          <img class="col-md-2 img-responsive" src="./img/glad.png"
+               ng-click="selectPain('happy')" height="50" width="50"
+               ng-class="happy"
+              >
+          <img class="col-md-2 img-responsive" src="./img/face_plain.png"
+               ng-click="selectPain('mid')" height="50" width="50"
+               ng-class="mid"
+              >
+          <img class="col-md-2 img-responsive" src="./img/face_sad.png"
+               ng-click="selectPain('sad')" height="50" width="50"
+               ng-class="sad"
+              >
+        </div>
+      </div>
+      <div class="col-md-6 panel-body">
+        <div class="row">
+          <h3>Comments: </h3>
+        </div>
+        <div class="row">
+          <textarea ng-model="comments" rows="4" cols="55"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">Done</button>
+</div>
