@@ -40,12 +40,13 @@ angular.module('HCAlpha.controllers', [])
 
         }
     })
-    .controller('PatientCtrl', function($scope,$state,$modal, Patient, exercises,completedExercises){
+    .controller('PatientCtrl', function($scope,$state,$modal, Patient, exercises, completedExercises){
       $scope.handle = {};
 
       $scope.patient = Patient;
       $scope.cards = exercises;
       $scope.completedExercises = completedExercises;
+      if($scope.completedExercises.length > 0){$scope.createGraphData()};
       $scope.cardflowSnapPage = {};
 
       $scope.coverClick = function(cover, index){
@@ -104,7 +105,7 @@ angular.module('HCAlpha.controllers', [])
           ], "rows": $scope.rows
         };
         console.log($scope.chartObject);
-      }();
+      };
 //        $scope.status = {
 //            isopen: false
 //        };
@@ -137,12 +138,12 @@ angular.module('HCAlpha.controllers', [])
        $scope.happy = "selected";
        $scope.mid = "plain";
        $scope.sad = "plain";
-       $scope.selected = 1;
+       $scope.selected = .5;
      } else if(type == 'mid') {
        $scope.happy = "plain";
        $scope.mid = "selected";
        $scope.sad = "plain";
-       $scope.selected = .5;
+       $scope.selected = .2;
      } else if(type == 'sad') {
        $scope.happy = "plain";
        $scope.mid = "plain";
