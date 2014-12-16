@@ -12,7 +12,8 @@ angular.module('HCAlpha',
     'parse-angular',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
-    'googlechart'
+    'googlechart',
+    'HCAlpha.filters'
   ])
   .run(['ParseSDK', function(ParseService){
 
@@ -46,7 +47,12 @@ angular.module('HCAlpha',
       .state('therapist.managePatient', {
         url: "/managePatient",
         templateUrl: "views/managePatient.html",
-        controller: 'patientManageCtrl'
+        controller: 'patientManageCtrl',
+            resolve: {
+                completedExercises: function(Patient) {
+                    return Patient.getCompletedExercises();
+                }
+            }
       })
       .state('patient', {
         url: '/patient',

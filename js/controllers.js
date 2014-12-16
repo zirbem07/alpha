@@ -275,11 +275,10 @@ angular.module('HCAlpha.controllers', [])
         }
       }
   })
-  .controller('patientManageCtrl', function($scope, $state, $modal, $log, $interval, user, addedExercise) {
+  .controller('patientManageCtrl', function($scope, $state, $modal, $log, $interval, user, addedExercise, completedExercises) {
     $scope.patient = user.patient;
-    console.log($scope.patient);
-    $scope.weeklyExercise = [];
-
+    $scope.weeklyExercise = completedExercises;
+    console.log($scope.weeklyExercise);
     $scope.exercises = [];
     $scope.addedExercise = addedExercise.theExercises();
 
@@ -297,12 +296,6 @@ angular.module('HCAlpha.controllers', [])
       });
     };
 
-    $scope.getWeeklyExercise = function(){
-        var date = $scope.patient.createdAt.substr(0,10);
-
-    }
-
-    $scope.getWeeklyExercise();
     $scope.getExercise();
 
     $scope.addExercise = function(x){

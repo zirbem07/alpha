@@ -60,7 +60,9 @@
             </div>
         </tab>
         <tab heading="Completed">
-
+            <div ng-repeat="x in weeklyExercise">
+                <p>{{x.name}}</p>
+            </div>
         </tab>
     </tabset>
 </div>
