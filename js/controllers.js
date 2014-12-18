@@ -46,7 +46,6 @@ angular.module('HCAlpha.controllers', [])
       $scope.patient = Patient;
       $scope.cards = exercises;
       $scope.completedExercises = completedExercises;
-      if($scope.completedExercises.length > 0){$scope.createGraphData()};
       $scope.cardflowSnapPage = {};
 
       $scope.coverClick = function(cover, index){
@@ -85,27 +84,29 @@ angular.module('HCAlpha.controllers', [])
       };
 
       $scope.createGraphData = function(){
-        var sum = 0;
-        var date = $scope.completedExercises[0].attributes.date;
-        $scope.rows = [];
-        angular.forEach($scope.completedExercises, function(e){
-          if(e.attributes.date != date) {
-            //do not create object
-            $scope.rows.push({c: [{v: date},{v: sum}]});
-          }
-          date = e.attributes.date;
-          sum += e.attributes.progress;
-          console.log($scope.rows);
-        });
-        $scope.rows.push({c: [{v: date},{v: sum}]});
-        $scope.chartObject.data = {
-          "cols": [
-            {id: "t", label: "Date", type: "string"},
-            {id: "s", label: "Progress", type: "number"}
-          ], "rows": $scope.rows
-        };
-        console.log($scope.chartObject);
-      };
+        if($scope.completedExercises[0]){
+          var sum = 0;
+          var date = $scope.completedExercises[0].attributes.date;
+          $scope.rows = [];
+          angular.forEach($scope.completedExercises, function(e){
+            if(e.attributes.date != date) {
+              //do not create object
+              $scope.rows.push({c: [{v: date},{v: sum}]});
+            }
+            date = e.attributes.date;
+            sum += e.attributes.progress;
+            console.log($scope.rows);
+          });
+          $scope.rows.push({c: [{v: date},{v: sum}]});
+          $scope.chartObject.data = {
+            "cols": [
+              {id: "t", label: "Date", type: "string"},
+              {id: "s", label: "Progress", type: "number"}
+            ], "rows": $scope.rows
+          };
+          console.log($scope.chartObject)
+        }
+      }();
 //        $scope.status = {
 //            isopen: false
 //        };
