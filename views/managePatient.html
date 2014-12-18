@@ -1,30 +1,31 @@
 <div class="row" ng-mouseup="mouseUp()">
-    <tabset class="col-md-8 well well-sm theTabs">
+    <tabset class="col-sm-8 well well-sm theTabs">
         <tab heading="Justified">
-            <div>
-                <div class="row">
-                    <div ng-repeat="x in exercises" class="col-md-4 well well-sm exTab">
-                        <div ng-mousedown='mouseDown(x)'>
-                            <img ng-src="{{x.img}}" class="col-md-4" style="padding:0px;" ng-click="addExercise(x)">
-                            <div class=" col-md-8">
-                                <div class="col-md-4" style="padding:0px;">Name</div><br>
-                                <div class="col-md-12" style="padding:0px;">{{x.name}}</div>
-                            </div>
-                            <div class="col-md-12" style="background-color: #7a3fa8">
-                                <span class="col-md-3">{{x.weightBand}}</span>
-                                <span class="col-md-3">Reps</span>
-                                <span class="col-md-3">Sets</span>
-                                <span class="col-md-3">Hold</span>
-                            </div>
-                            <div class="col-md-12">
-                                <span class="col-md-3">{{x.lbsColor}}</span>
-                                <span class="col-md-3">{{x.reps}}</span>
-                                <span class="col-md-3">{{x.sets}}</span>
-                                <span class="col-md-3">Hold</span>
+            <div class="row">
+                <md-content>
+                    <md-card ng-repeat="x in exercises" class="col-sm-3"  style="padding: 5px; background-color: #f5f5f5">
+                        <div>
+                            <div ng-mousedown='mouseDown(x)'>
+                                <img ng-src="{{x.img}}" class="col-sm-4" style="padding:0px;" ng-click="addExercise(x)">
+                                <div class="col-sm-8">
+                                    <div class="col-sm-12" style="padding:0px;">{{x.name}}</div>
+                                </div>
+                                <div class="col-sm-12" style="background-color: lightgray; padding:0px;">
+                                    <span style="padding: 0px" class="col-sm-3">{{x.weightBand}}</span>
+                                    <span style="padding: 0px" class="col-sm-3">Reps</span>
+                                    <span style="padding: 0px" class="col-sm-3">Sets</span>
+                                    <span style="padding: 0px" class="col-sm-3">Hold</span>
+                                </div>
+                                <div class="col-sm-12" style="padding:0px;">
+                                    <span style="padding: 0px" class="col-sm-3">{{x.lbsColor}}</span>
+                                    <span style="padding: 0px" class="col-sm-3">{{x.reps}}</span>
+                                    <span style="padding: 0px" class="col-sm-3">{{x.sets}}</span>
+                                    <span style="padding: 0px" class="col-sm-3">Hold</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </md-card>
+                </md-content>
             </div>
         </tab>
         <tab heading="Injury Related">
@@ -35,34 +36,49 @@
         </tab>
         <input type="text"><a class="glyphicon glyphicon-search"></a>
     </tabset>
-    <tabset class="col-md-3 col-md-offset-1 well well-sm theTabs">
+    <tabset class="col-sm-3 col-sm-offset-1 well well-sm theTabs">
         <tab heading="Assigned" id="current">
-            <div>
-                <div ng-repeat="x in addedExercise | reverse" class="col-md-12 well well-sm aexTab">
-                    <img ng-src="{{x.img}}" class="col-md-4" style="padding:0px;">
-                    <div class=" col-md-8">
-                        <div class="col-md-4" style="padding:0px;">Name</div><br>
-                        <div class="col-md-12" style="padding:0px;">{{x.name}}</div>
+            <md-content>
+                <md-card ng-repeat="x in addedExercise | reverse" class="col-sm-11 aexTab" style="margin-top:10px;margin-bottom:10px;padding: 0px">
+                    <img ng-src="{{x.img}}" class="col-sm-4" style="padding:0px;">
+                    <div class=" col-sm-8">
+                        <div class="col-sm-4" style="padding:0px;">Name</div><span class="col-sm-8"></span>
+                        <div class="col-sm-12" style="padding:0px;">{{x.name}}</div>
                     </div>
-                    <div class="col-md-12" style="background-color: #7a3fa8">
-                        <span class="col-md-3">Band</span>
-                        <span class="col-md-3">Reps</span>
-                        <span class="col-md-3">Sets</span>
-                        <span class="col-md-3">Hold</span>
+                    <div class="col-sm-12" style="background-color: lightgray">
+                        <span class="col-sm-3">Band</span>
+                        <span class="col-sm-3">Reps</span>
+                        <span class="col-sm-3">Sets</span>
+                        <span class="col-sm-3">Hold</span>
                     </div>
-                    <div class="col-md-12">
-                        <span class="col-md-3">{{x.lbsColor}}</span>
-                        <span class="col-md-3">{{x.reps}}</span>
-                        <span class="col-md-3">{{x.sets}}</span>
-                        <span class="col-md-3">Hold</span>
+                    <div class="col-sm-12">
+                        <span class="col-sm-3">{{x.lbsColor}}</span>
+                        <span class="col-sm-3">{{x.reps}}</span>
+                        <span class="col-sm-3">{{x.sets}}</span>
+                        <span class="col-sm-3">Hold</span>
                     </div>
-                </div>
-            </div>
+                    <div class="col-sm-12">
+                        {{x.comments}}
+                    </div>
+                </md-card>
+            </md-content>
         </tab>
         <tab heading="Completed">
-            <div ng-repeat="x in weeklyExercise">
-                <p>{{x.name}}</p>
-            </div>
+            <md-content>
+                <md-card ng-repeat="x in eachWeek | reverse" class="col-sm-11" style="margin-top:10px;margin-bottom:10px;padding: 0px">
+                    <h5 class="col-sm-12">{{x.range}}</h5>
+                    <div class="col-sm-12" style="background-color: lightgrey">
+                        <span class="col-sm-3">Points</span>
+                        <span class="col-sm-4">Competed</span>
+                        <span class="col-sm-5">Avg. Pain</span>
+                    </div>
+                    <div class="col-sm-12">
+                        <span class="col-sm-3">5</span>
+                        <span class="col-sm-4">{{x.thisWeeks.length}}</span>
+                        <span class="col-sm-5">5</span>
+                    </div>
+                </md-card>
+            </md-content>
         </tab>
     </tabset>
 </div>

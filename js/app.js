@@ -2,6 +2,8 @@
 angular.module('HCAlpha',
   [
     'ngTouch',
+      'ngAnimate',
+      'ngMaterial',
     'HCAlpha.controllers',
     'HCAlpha.services',
     'HCAlpha.directives',
