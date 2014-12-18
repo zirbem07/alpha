@@ -1,6 +1,6 @@
 <div class="row">
-	<ul class="well well-sm list-unstyled col-md-9">
+	<ul class="well well-sm list-unstyled col-sm-9">
 		<li ng-repeat="p in patients"><a ng-click="manageThisPatient(p)">{{p.firstName}} {{p.lastName}} - {{p.injuryType}}</a></li>
 	</ul>
-    <button class="btn btn-success col-md-2 col-md-offset-1" ng-click="open()">Add Patient</button>
+    <button class="btn btn-success col-sm-2 col-sm-offset-1" ng-click="open()">Add Patient</button>
 </div>
