@@ -4,8 +4,7 @@ angular.module('HCAlpha.controllers', [])
 
         $scope.loginClick = function() {
 
-          $scope.email = "nicole@test.com";
-          $scope.password = "test";
+
           Parse.User.logIn($scope.email, $scope.password, {
             success: function(user) {
               if(user.attributes.type == 'patient') {
@@ -26,7 +25,7 @@ angular.module('HCAlpha.controllers', [])
               }
               else if(user.attributes.type == 'therapist') {
                 //TODO: Get Thearpists info
-                $state.go('managePatient')
+                $state.go('therapist')
               }
               else {
                 //TODO: Force Logout
@@ -243,7 +242,7 @@ angular.module('HCAlpha.controllers', [])
   .controller('SignUpCtrl', function($scope, $state){
 
     $scope.email="n@test.com";
-    $scope.type="patient";
+    $scope.type="therapist";
 
       $scope.signUpClick = function() {
         //TODO: Parse Query to validate user in factory
@@ -260,13 +259,14 @@ angular.module('HCAlpha.controllers', [])
 
           }
           else if($scope.type == 'therapist'){
-
+              var Therapist = Parse.Object.extend("Therapist");
+              var newTherapist = new Therapist();
           }
 
           user.signUp(null, {
             success: function(user) {
-              newPatient.set("parent", user.id);
-              newPatient.save();
+              newTherapist.set("parent", user.id);
+              newTherapist.save();
 
             },
             error: function(user, error) {
@@ -321,7 +321,6 @@ angular.module('HCAlpha.controllers', [])
                     }
             }
         }
-        console.log($scope.eachWeek);
     };
 
     $scope.setWeeklyExercises();
@@ -331,8 +330,13 @@ angular.module('HCAlpha.controllers', [])
         addedExercise.push(x);
     };
 
+    $scope.removeExercise = function(ex){
+        var index = $scope.addedExercise.indexOf(ex);
+        $scope.addedExercise.splice(index,1);
+    }
+
     $scope.open = function (exercise) {
-      $interval.cancel($scope.promise);
+      $interval.cancel(promise);
       var imgArr = exercise.url.split("=");
       var imgID = imgArr[1];
       var modalInstance = $modal.open({
@@ -357,11 +361,11 @@ angular.module('HCAlpha.controllers', [])
     };
 
         var promise;
-        var i = 0;
+        var t = 0;
 
         $scope.mouseDown = function (x) {
-            if(i == 0) {
-                i++;
+            if(t == 0) {
+                t = 1;
                 promise = $interval(function () {
                     $scope.openIt(x);
                     $interval.cancel(promise);
@@ -371,14 +375,14 @@ angular.module('HCAlpha.controllers', [])
         };
 
         $scope.mouseUp = function () {
-            i = 0;
+            t = 0;
             $interval.cancel(promise);
 
         };
 
         $scope.openIt = function (x) {
-            if(i == 1){
-                i = 0;
+            if(t == 1){
+                t = 0;
                 $scope.open(x);
             }
         };
