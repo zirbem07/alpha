@@ -3350,7 +3350,9 @@ md-tooltip[width-32="8"].md-show .md-background {
     box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2); }
 
 .md-whiteframe-z3 {
-    box-shadow: 0px 17px 50px rgba(0, 0, 0, 0.19); }
+    box-shadow: -8px 27px 15px rgba(0, 0, 0, 0.3);
+    margin-left: 15px;
+}
 
 .md-whiteframe-z4 {
     box-shadow: 0px 16px 28px 0 rgba(0, 0, 0, 0.22); }

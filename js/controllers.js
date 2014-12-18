@@ -46,6 +46,13 @@ angular.module('HCAlpha.controllers', [])
       $scope.patient = Patient;
       $scope.cards = exercises;
       $scope.completedExercises = completedExercises;
+      if(completedExercises){
+        $scope.recent = completedExercises[completedExercises.length -1];
+        console.log($scope.recent);
+
+      } else {
+        $scope.recent = "No recent exercises";
+      }
       $scope.cardflowSnapPage = {};
 
       $scope.coverClick = function(cover, index){
