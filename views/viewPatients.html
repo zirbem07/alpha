@@ -1,5 +1,5 @@
 <div class="row">
-	<ul>
-		<li ng-repeat="p in patients"><a ng-click="manageThisPatient(p)">{{p.objectId}}</a></li>
+	<ul class="well well-sm list-unstyled">
+		<li ng-repeat="p in patients"><a ng-click="manageThisPatient(p)">{{p.firstName}} {{p.lastName}} - {{p.injuryType}}</a></li>
 	</ul>
 </div>

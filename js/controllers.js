@@ -167,7 +167,7 @@ angular.module('HCAlpha.controllers', [])
         if(mm<10){
           mm='0'+mm
         }
-        today = dd+'/'+mm+'/'+yyyy;
+        today = yyyy+'-'+mm+'-'+dd;
 
 
         var params = {
@@ -279,7 +279,7 @@ angular.module('HCAlpha.controllers', [])
   .controller('patientManageCtrl', function($scope, $state, $modal, $log, $interval, user, addedExercise, completedExercises) {
     $scope.patient = user.patient;
     $scope.weeklyExercise = completedExercises;
-    console.log($scope.weeklyExercise);
+    $scope.eachWeek = [];
     $scope.exercises = [];
     $scope.addedExercise = addedExercise.theExercises();
 
@@ -296,12 +296,39 @@ angular.module('HCAlpha.controllers', [])
         }
       });
     };
+    $scope.setWeeklyExercises = function(){
+        var theDate = new Date($scope.patient.createdAt.substr(0,10));
+        var newDate = new Date(theDate);
+        var rangeDate = new Date();
+        newDate.setDate(newDate.getDate() + 7);
+        var today = new Date();
 
+
+        while(newDate < today){
+            rangeDate.setDate(newDate.getDate() - 7);
+            $scope.eachWeek.push({'range':rangeDate.toDateString() + "-" + newDate.toDateString(),'date':newDate.toDateString(), 'thisWeeks': []});
+            rangeDate.setDate(newDate.getDate());
+            newDate.setDate(newDate.getDate() +  7);
+        }
+        $scope.eachWeek.push({'range': rangeDate.toDateString() + "-" + today.toDateString(),'date':today.toDateString(), 'thisWeeks': []});
+        while($scope.weeklyExercise.length >= 1){
+            var tempDate = new Date($scope.weeklyExercise[0].attributes.date.substr(0,10)).toDateString();
+            for(var j=0; j < $scope.eachWeek.length; j++){
+                    if (Date.parse(tempDate) < Date.parse($scope.eachWeek[j].date) && $scope.weeklyExercise[0] !== undefined) {
+                        $scope.eachWeek[j].thisWeeks.push($scope.weeklyExercise[0]);
+                        $scope.weeklyExercise.splice(0,1);
+                    }
+            }
+        }
+        console.log($scope.eachWeek);
+    };
+
+    $scope.setWeeklyExercises();
     $scope.getExercise();
 
     $scope.addExercise = function(x){
         addedExercise.push(x);
-    }
+    };
 
     $scope.open = function (exercise) {
       $interval.cancel($scope.promise);
@@ -358,9 +385,9 @@ angular.module('HCAlpha.controllers', [])
   })
   .controller('modalCtrl', function($scope, $state, $modalInstance, exercise, urlID, patientObj, addedExercise) {
     $scope.patient = patientObj;
-
+    $scope.addedComments = "";
     $scope.exercise = exercise;
-    
+
     $scope.imgID = urlID;
 
     $scope.ok = function () {
@@ -378,6 +405,7 @@ angular.module('HCAlpha.controllers', [])
       assignedExercise.set("type", $scope.exercise.type);
       assignedExercise.set("url", $scope.exercise.url);
       assignedExercise.set("weightBand", $scope.exercise.weightBand);
+      assignedExercise.set("comments", $scope.addedComments);
 
       assignedExercise.save();
 
@@ -395,7 +423,7 @@ angular.module('HCAlpha.controllers', [])
         exerciseToAssign.type = $scope.exercise.type;
         exerciseToAssign.url = $scope.exercise.url;
         exerciseToAssign.weightBand = $scope.exercise.weightBand;
-
+        exerciseToAssign.comments = $scope.addedComments;
         addedExercise.push(exerciseToAssign);
 
         $scope.dismiss();
