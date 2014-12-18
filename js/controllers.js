@@ -205,7 +205,7 @@ angular.module('HCAlpha.controllers', [])
     };
 
   })
-  .controller('therapistCtrl', function($scope, $state, user) {
+  .controller('therapistCtrl', function($scope, $state, user, $modal) {
     $scope.patients = [];
     $scope.go = function(){
       $state.go("therapist.viewPatients");
@@ -245,11 +245,21 @@ angular.module('HCAlpha.controllers', [])
       $scope.status.isopen = !$scope.status.isopen;
     };
 
+        $scope.open = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'views/signPatientUp.html',
+                controller: 'SignUpCtrl',
+            });
+        }
+
   })
-  .controller('SignUpCtrl', function($scope, $state){
+  .controller('SignUpCtrl', function($scope, $state, $modalInstance){
 
     $scope.email="n@test.com";
-    $scope.type="therapist";
+    $scope.type="patient";
+        $scope.dismiss = function () {
+            $modalInstance.dismiss('cancel');
+        }
 
       $scope.signUpClick = function() {
         //TODO: Parse Query to validate user in factory
@@ -262,7 +272,11 @@ angular.module('HCAlpha.controllers', [])
           if($scope.type == 'patient'){
             var Patient = Parse.Object.extend("Patient");
             var newPatient = new Patient();
-            newPatient.set("injuryLevel", 1);
+              newPatient.set("injuryLevel", 1);
+              newPatient.set("clinicID", 1);
+              newPatient.set("injuryType", "shoulder");
+              newPatient.set("firstName", $scope.firstName);
+              newPatient.set("lastName", $scope.lastName);
 
           }
           else if($scope.type == 'therapist'){
@@ -272,8 +286,8 @@ angular.module('HCAlpha.controllers', [])
 
           user.signUp(null, {
             success: function(user) {
-              newTherapist.set("parent", user.id);
-              newTherapist.save();
+                newPatient.set("parent", user.id);
+                newPatient.save();
 
             },
             error: function(user, error) {
@@ -282,6 +296,7 @@ angular.module('HCAlpha.controllers', [])
             }
           });
         }
+          $scope.dismiss();
       }
   })
   .controller('patientManageCtrl', function($scope, $state, $modal, $log, $interval, user, addedExercise, completedExercises) {
