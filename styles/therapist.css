@@ -28,3 +28,6 @@
 .aexTab{
 
 }
+::-webkit-scrollbar {
+    display: none;
+}

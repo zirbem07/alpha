@@ -1,48 +1,49 @@
 <div class="row" ng-mouseup="mouseUp()">
     <tabset class="col-sm-8 well well-sm theTabs">
-        <tab heading="Justified">
+        <tab heading="Recommended" class="col-sm-3" style="text-align: center">
             <div class="row">
+
                 <md-content>
-                    <md-card ng-repeat="x in exercises" class="col-sm-3"  style="padding: 5px; background-color: #f5f5f5">
-                        <div>
-                            <div ng-mousedown='mouseDown(x)'>
-                                <img ng-src="{{x.img}}" class="col-sm-4" style="padding:0px;" ng-click="addExercise(x)">
-                                <div class="col-sm-8">
-                                    <div class="col-sm-12" style="padding:0px;">{{x.name}}</div>
-                                </div>
-                                <div class="col-sm-12" style="background-color: lightgray; padding:0px;">
-                                    <span style="padding: 0px" class="col-sm-3">{{x.weightBand}}</span>
-                                    <span style="padding: 0px" class="col-sm-3">Reps</span>
-                                    <span style="padding: 0px" class="col-sm-3">Sets</span>
-                                    <span style="padding: 0px" class="col-sm-3">Hold</span>
-                                </div>
-                                <div class="col-sm-12" style="padding:0px;">
-                                    <span style="padding: 0px" class="col-sm-3">{{x.lbsColor}}</span>
-                                    <span style="padding: 0px" class="col-sm-3">{{x.reps}}</span>
-                                    <span style="padding: 0px" class="col-sm-3">{{x.sets}}</span>
-                                    <span style="padding: 0px" class="col-sm-3">Hold</span>
-                                </div>
-                            </div>
+                        <div class="col-sm-offset-2">
+                        <div class="row">
+                    <md-card ng-repeat="x in exercises" class="col-sm-3"  style="margin:10px;padding:5px;background-color: #f5f5f5;" ng-mousedown='mouseDown(x)'>
+                        <img ng-src="{{x.img}}" class="col-sm-4" style="margin-bottom:10px;padding: 0px;" ng-click="addExercise(x)">
+                        <div class="col-sm-8">
+                            <div class="col-sm-12" style="padding:0px;">{{x.name}}</div>
+                        </div>
+                        <div class="col-sm-12" style="background-color: lightgray; padding:0px;">
+                            <span style="padding: 0px" class="col-sm-3">{{x.weightBand}}</span>
+                            <span style="padding: 0px" class="col-sm-3">Reps</span>
+                            <span style="padding: 0px" class="col-sm-3">Sets</span>
+                            <span style="padding: 0px" class="col-sm-3">Hold</span>
+                        </div>
+                        <div class="col-sm-12" style="padding:0px;">
+                            <span style="padding: 0px" class="col-sm-3">{{x.lbsColor}}</span>
+                            <span style="padding: 0px" class="col-sm-3">{{x.reps}}</span>
+                            <span style="padding: 0px" class="col-sm-3">{{x.sets}}</span>
+                            <span style="padding: 0px" class="col-sm-3">Hold</span>
                         </div>
                     </md-card>
+                        </div>
+                        </div>
                 </md-content>
             </div>
         </tab>
-        <tab heading="Injury Related">
+        <tab heading="Injury Related" class="col-sm-3" style="text-align: center">
 
         </tab>
-        <tab heading="All">
+        <tab heading="All" class="col-sm-2" style="text-align: center">
 
         </tab>
-        <input type="text"><a class="glyphicon glyphicon-search"></a>
+        <div style="padding-top: 10px"><input type="text" class="col-sm-3" placeholder="Search"><a class="glyphicon glyphicon-search col-sm-1"></a></div>
     </tabset>
     <tabset class="col-sm-3 col-sm-offset-1 well well-sm theTabs">
-        <tab heading="Assigned" id="current">
+        <tab heading="Assigned" id="current" class="col-sm-6" style="text-align: center">
             <md-content>
-                <md-card ng-repeat="x in addedExercise | reverse" class="col-sm-11 aexTab" style="margin-top:10px;margin-bottom:10px;padding: 0px">
+                <md-card ng-repeat="x in addedExercise | reverse" class="col-sm-11 aexTab" style="margin-top:10px;margin-bottom:10px;padding: 0px; background-color: #f5f5f5">
                     <img ng-src="{{x.img}}" class="col-sm-4" style="padding:0px;">
                     <div class=" col-sm-8">
-                        <div class="col-sm-4" style="padding:0px;">Name</div><span class="col-sm-8"></span>
+                        <span class="glyphicon glyphicon-remove pull-right" style="color:red" ng-click="removeExercise(x)"></span>
                         <div class="col-sm-12" style="padding:0px;">{{x.name}}</div>
                     </div>
                     <div class="col-sm-12" style="background-color: lightgray">
@@ -63,19 +64,19 @@
                 </md-card>
             </md-content>
         </tab>
-        <tab heading="Completed">
+        <tab heading="Completed" class="col-sm-6" style="text-align: center">
             <md-content>
-                <md-card ng-repeat="x in eachWeek | reverse" class="col-sm-11" style="margin-top:10px;margin-bottom:10px;padding: 0px">
-                    <h5 class="col-sm-12">{{x.range}}</h5>
+                <md-card ng-repeat="x in eachWeek | reverse" class="col-sm-11" style="margin-top:10px;margin-bottom:10px;padding: 0px; background-color: #f5f5f5">
+                    <h4 class="col-sm-12">{{x.range}}</h4>
                     <div class="col-sm-12" style="background-color: lightgrey">
                         <span class="col-sm-3">Points</span>
                         <span class="col-sm-4">Competed</span>
                         <span class="col-sm-5">Avg. Pain</span>
                     </div>
                     <div class="col-sm-12">
-                        <span class="col-sm-3">5</span>
+                        <span class="col-sm-3">+5</span>
                         <span class="col-sm-4">{{x.thisWeeks.length}}</span>
-                        <span class="col-sm-5">5</span>
+                        <span class="col-sm-5">1.5</span>
                     </div>
                 </md-card>
             </md-content>
