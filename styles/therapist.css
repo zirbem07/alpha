@@ -17,7 +17,7 @@
     padding-bottom: 12;
 }
 .theTabs{
-    max-height: 80vh;
+    max-height: 75vh;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 5px;
@@ -28,6 +28,23 @@
 .aexTab{
 
 }
-::-webkit-scrollbar {
-    display: none;
+@media only screen and (min-device-width: 768px) {
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+
+    ::-webkit-scrollbar:vertical {
+        width: 15px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, .5);
+        border-radius: 10px;
+        border: 2px solid #ffffff;
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: #ffffff;
+    }
 }

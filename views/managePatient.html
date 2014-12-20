@@ -1,62 +1,65 @@
-<div class="row" ng-mouseup="mouseUp()">
+<div class="row">
     <tabset class="col-sm-8 well well-sm theTabs">
-        <tab heading="Recommended" class="col-sm-3" style="text-align: center">
+        <tab heading="Recommended" class="col-sm-3" style="text-align: center;padding: 0px">
             <div class="row">
 
                 <md-content>
                         <div class="col-sm-offset-2">
                         <div class="row">
-                    <md-card ng-repeat="x in exercises" class="col-sm-3"  style="margin:10px;padding:5px;background-color: #f5f5f5;" ng-mousedown='mouseDown(x)'>
-                        <img ng-src="{{x.img}}" class="col-sm-4" style="margin-bottom:10px;padding: 0px;" ng-click="addExercise(x)">
-                        <div class="col-sm-8">
-                            <div class="col-sm-12" style="padding:0px;">{{x.name}}</div>
+                    <md-card ng-repeat="x in exercises" class="col-sm-3"  style="margin:5px;padding:0px;background-color: #f5f5f5;">
+                        <div class="col-md-12" ng-click="addExercise(x)" style="padding: 0px">
+                        <img ng-src="{{x.img}}" class="col-sm-4" style="margin-bottom:10px;padding: 0px;">
+                        <div class="col-sm-8" style="padding: 0px">
+                            <div class="col-sm-12" style="padding:0px;"><small>{{x.name}}</small></div>
                         </div>
                         <div class="col-sm-12" style="background-color: lightgray; padding:0px;">
-                            <span style="padding: 0px" class="col-sm-3">{{x.weightBand}}</span>
-                            <span style="padding: 0px" class="col-sm-3">Reps</span>
-                            <span style="padding: 0px" class="col-sm-3">Sets</span>
-                            <span style="padding: 0px" class="col-sm-3">Hold</span>
+                            <span style="padding: 0px" class="col-sm-3"><small><small>{{x.weightBand | capitalize}}</small></small></span>
+                            <span style="padding: 0px" class="col-sm-3"><small><small>Reps</small></small></span>
+                            <span style="padding: 0px" class="col-sm-3"><small><small>Sets</small></small></span>
+                            <span style="padding: 0px" class="col-sm-3"><small><small>Hold</small></small></span>
                         </div>
                         <div class="col-sm-12" style="padding:0px;">
-                            <span style="padding: 0px" class="col-sm-3">{{x.lbsColor}}</span>
-                            <span style="padding: 0px" class="col-sm-3">{{x.reps}}</span>
-                            <span style="padding: 0px" class="col-sm-3">{{x.sets}}</span>
-                            <span style="padding: 0px" class="col-sm-3">Hold</span>
+                            <span style="padding: 0px" class="col-sm-3"><small>{{x.lbsColor}}</small></span>
+                            <span style="padding: 0px" class="col-sm-3"><small>{{x.reps}}</small></span>
+                            <span style="padding: 0px" class="col-sm-3"><small>{{x.sets}}</small></span>
+                            <span style="padding: 0px" class="col-sm-3"><small>Hold</small></span>
                         </div>
+                        </div>
+                        <button class="btn btn-success col-sm-12" ng-click="open(x)" style="line-height: 10px">Edit</button>
                     </md-card>
                         </div>
                         </div>
                 </md-content>
             </div>
         </tab>
-        <tab heading="Injury Related" class="col-sm-3" style="text-align: center">
+        <tab heading="Injury Related" class="col-sm-3" style="text-align: center;padding: 0px" disabled="true">
 
         </tab>
-        <tab heading="All" class="col-sm-2" style="text-align: center">
+        <tab heading="All" class="col-sm-2" style="text-align: center;padding: 0px" disabled="true">
 
         </tab>
         <div style="padding-top: 10px"><input type="text" class="col-sm-3" placeholder="Search"><a class="glyphicon glyphicon-search col-sm-1"></a></div>
     </tabset>
     <tabset class="col-sm-3 col-sm-offset-1 well well-sm theTabs">
-        <tab heading="Assigned" id="current" class="col-sm-6" style="text-align: center">
+        <tab heading="Assigned" id="current" class="col-sm-6" style="text-align: center;padding: 0px">
             <md-content>
-                <md-card ng-repeat="x in addedExercise | reverse" class="col-sm-11 aexTab" style="margin-top:10px;margin-bottom:10px;padding: 0px; background-color: #f5f5f5">
+                <md-card ng-repeat="x in addedExercise | reverse track by $index" class="col-sm-11 aexTab" style="margin-top:10px;margin-bottom:10px;padding: 0px; background-color: #f5f5f5">
                     <img ng-src="{{x.img}}" class="col-sm-4" style="padding:0px;">
                     <div class=" col-sm-8">
                         <span class="glyphicon glyphicon-remove pull-right" style="color:red" ng-click="removeExercise(x)"></span>
-                        <div class="col-sm-12" style="padding:0px;">{{x.name}}</div>
+                        <div class="col-sm-12" style="padding:0px;"><small>{{x.name}}</small></div>
                     </div>
-                    <div class="col-sm-12" style="background-color: lightgray">
-                        <span class="col-sm-3">Band</span>
-                        <span class="col-sm-3">Reps</span>
-                        <span class="col-sm-3">Sets</span>
-                        <span class="col-sm-3">Hold</span>
+                    <div class="col-sm-12" style="background-color: lightgray; padding: 0px">
+                        <span class="col-sm-3"><small><small>{{x.weightBand}}</small></small></span>
+                        <span class="col-sm-3"><small><small>Reps</small></small></span>
+                        <span class="col-sm-3"><small><small>Sets</small></small></span>
+                        <span class="col-sm-3"><small><small>Hold</small></small></span>
                     </div>
-                    <div class="col-sm-12">
-                        <span class="col-sm-3">{{x.lbsColor}}</span>
-                        <span class="col-sm-3">{{x.reps}}</span>
-                        <span class="col-sm-3">{{x.sets}}</span>
-                        <span class="col-sm-3">Hold</span>
+                    <div class="col-sm-12" style="padding: 0px">
+                        <span class="col-sm-3"><small>{{x.lbsColor}}</small></span>
+                        <span class="col-sm-3"><small>{{x.reps}}</small></span>
+                        <span class="col-sm-3"><small>{{x.sets}}</small></span>
+                        <span class="col-sm-3"><small>Hold</small></span>
                     </div>
                     <div class="col-sm-12">
                         {{x.comments}}
@@ -64,16 +67,16 @@
                 </md-card>
             </md-content>
         </tab>
-        <tab heading="Completed" class="col-sm-6" style="text-align: center">
+        <tab heading="Completed" class="col-sm-6" style="text-align: center;padding: 0px">
             <md-content>
                 <md-card ng-repeat="x in eachWeek | reverse" class="col-sm-11" style="margin-top:10px;margin-bottom:10px;padding: 0px; background-color: #f5f5f5">
                     <h4 class="col-sm-12">{{x.range}}</h4>
-                    <div class="col-sm-12" style="background-color: lightgrey">
-                        <span class="col-sm-3">Points</span>
-                        <span class="col-sm-4">Competed</span>
-                        <span class="col-sm-5">Avg. Pain</span>
+                    <div class="col-sm-12" style="background-color: lightgrey; padding: 0px">
+                        <span class="col-sm-3"><small><small>Points</small></small></span>
+                        <span class="col-sm-4"><small><small>Competed</small></small></span>
+                        <span class="col-sm-5"><small><small>Avg. Pain</small></small></span>
                     </div>
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" style="padding: 0px">
                         <span class="col-sm-3">+5</span>
                         <span class="col-sm-4">{{x.thisWeeks.length}}</span>
                         <span class="col-sm-5">1.5</span>
