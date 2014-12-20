@@ -43,6 +43,7 @@ angular.module('HCAlpha.services', [])
     o.getCompletedExercises = function() {
       var deferred = $q.defer();
       var query = new Parse.Query("CompletedExercises");
+      query.ascending('date');
       query.equalTo("userID", 'xgZoRrUL7D');
       //TODO change ^^^ to query.equalTo("userID", o.id);
       query.find()

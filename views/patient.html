@@ -7,16 +7,19 @@
         </a>
     </div>
     <div class="nav navbar-nav navbar-right btn-group" dropdown is-open="status.isopen">
-        <a class="dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-            dropdown <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+        <!--<a class="dropdown-toggle" dropdown-toggle ng-disabled="disabled">-->
+            <!--dropdown <span class="caret"></span>-->
+        <!--</a>-->
+        <ul class="nav navbar-nav navbar-right">
+          <li> <a href=".#/home">Log Out</a></li>
         </ul>
+        <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li><a href="#">Action</a></li>-->
+            <!--<li><a href="#">Another action</a></li>-->
+            <!--<li><a href="#">Something else here</a></li>-->
+            <!--<li class="divider"></li>-->
+            <!--<li><a href="#">Separated link</a></li>-->
+        <!--</ul>-->
     </div>
 </div>
 </nav>
@@ -26,7 +29,7 @@
     </div>
   </cardflow>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 col-sm-4">
       <button ng-click="cardflowSnapPage.current=cardflowSnapPage.current-cardflowSnapPage.pageSize"
               class="btn btn-circle btn-lg btn-default btn-left"
               ng-disabled="cardflowSnapPage.current <= 0"
@@ -34,10 +37,10 @@
         <i class="glyphicon glyphicon-chevron-left"></i>
       </button>
     </div>
-    <div class="title  col-md-4">
+    <div class="title  col-md-4 col-sm-4">
       <h2 style="color: white; text-align: center; padding-bottom: 15px"> Your Exercises</h2>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 col-sm-4">
       <button ng-click="cardflowSnapPage.current=cardflowSnapPage.current+cardflowSnapPage.pageSize"
               ng-disabled="cardflowSnapPage.current >= (cards.length-cardflowSnapPage.pageSize)"
               class="btn btn-circle btn-lg btn-default pull-right btn-right">
@@ -45,15 +48,14 @@
       </button>
     </div>
   </div>
-    <br />
   <div class="row">
-    <div class="md-whiteframe-z3  whiteframe col-md-5" style="margin-left: 5%; margin-right: 50px">
+    <div class="md-whiteframe-z3  whiteframe col-md-5 col-sm-5" style="margin-left: 4%; margin-right: 50px">
       <div >
         <h2 align="center"><strong>Recent Exercises</strong></h2>
         <hr>
         <div class="row">
-        <img src="{{recent.attributes.img}}" height="200" width="200" class="img-responsive col-md-4">
-        <ul class="col-md-8">
+        <img src="{{recent.attributes.img}}" height="200" width="200" class="img-responsive  col-sm-4 col-md-4">
+        <ul class="col-md-8 col-sm-8">
           <li><strong>Name: </strong>{{recent.attributes.name}}</li>
           <li><strong>Date Completed: </strong>{{recent.attributes.date}}</li>
           <li><strong>Comments: </strong>{{recent.attributes.comments}}</li>
@@ -62,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div class="md-whiteframe-z3 col-md-5 whiteframe" style="margin-left: 5%">
+    <div class="md-whiteframe-z3 col-sm-5 col-md-5 whiteframe" style="margin-left: 5%">
       <div google-chart chart="chartObject" style="border: 1px solid #000000;"></div>
     </div>
   </div>
