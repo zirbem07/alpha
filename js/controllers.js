@@ -245,12 +245,12 @@ angular.module('HCAlpha.controllers', [])
       $scope.status.isopen = !$scope.status.isopen;
     };
 
-        $scope.open = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'views/signPatientUp.html',
-                controller: 'SignUpCtrl',
-            });
-        }
+    $scope.open = function () {
+      var modalInstance = $modal.open({
+          templateUrl: 'views/signPatientUp.html',
+          controller: 'SignUpCtrl',
+      });
+    }
 
   })
   .controller('SignUpCtrl', function($scope, $state, $modalInstance){
@@ -299,13 +299,19 @@ angular.module('HCAlpha.controllers', [])
           $scope.dismiss();
       }
   })
-  .controller('patientManageCtrl', function($scope, $state, $modal, $log, $interval, user, addedExercise, completedExercises) {
+  .controller('patientManageCtrl', function($scope, $state, $modal, $log, $interval, user, addedExercise, completedExercises, weekExercises) {
     $scope.patient = user.patient;
     $scope.weeklyExercise = completedExercises;
     $scope.eachWeek = [];
     $scope.exercises = [];
     $scope.addedExercise = addedExercise.theExercises();
 
+      /*var options = {
+        preventDefault: true
+      };
+      var exScroll = new Hammer('exercisesForPatient', options);
+      exScroll.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+      hammertime.on("dragup dragdown swipeup swipedown", function(ev){ });*/
     $scope.getExercise = function() {
       var query = new Parse.Query("Exercise");
       query.find({
@@ -320,29 +326,33 @@ angular.module('HCAlpha.controllers', [])
       });
     };
     $scope.setWeeklyExercises = function(){
-        var theDate = new Date($scope.patient.createdAt.substr(0,10));
-        var newDate = new Date(theDate);
-        var rangeDate = new Date();
-        newDate.setDate(newDate.getDate() + 7);
-        var today = new Date();
+      var theDate = new Date($scope.patient.createdAt.substr(0,10));
+      var newDate = new Date(theDate);
+      var rangeDate = new Date();
+      newDate.setDate(newDate.getDate() + 7);
+      var today = new Date();
 
 
-        while(newDate < today){
-            rangeDate.setDate(newDate.getDate() - 7);
-            $scope.eachWeek.push({'range':rangeDate.toDateString() + "-" + newDate.toDateString(),'date':newDate.toDateString(), 'thisWeeks': []});
-            rangeDate.setDate(newDate.getDate());
-            newDate.setDate(newDate.getDate() +  7);
+      while(newDate < today){
+        rangeDate.setDate(newDate.getDate() - 7);
+        $scope.eachWeek.push({'range':rangeDate.toDateString() + "-" + newDate.toDateString(),'date':newDate.toDateString(),
+                              'thisWeeks': [],'painScore':0});
+        rangeDate.setDate(newDate.getDate());
+        newDate.setDate(newDate.getDate() +  7);
+      }
+      $scope.eachWeek.push({'range': rangeDate.toDateString() + "-" + today.toDateString(),'date':today.toDateString(),
+                            'thisWeeks': [],'painScore':0, 'points': 0});
+      while($scope.weeklyExercise.length >= 1){
+        var tempDate = new Date($scope.weeklyExercise[0].attributes.date.substr(0,10)).toDateString();
+        for(var j=0; j < $scope.eachWeek.length; j++){
+          if (Date.parse(tempDate) < Date.parse($scope.eachWeek[j].date) && $scope.weeklyExercise[0] !== undefined) {
+            $scope.eachWeek[j].thisWeeks.push($scope.weeklyExercise[0]);
+            $scope.eachWeek[j].painScore += $scope.weeklyExercise[0].attributes.pain;
+            $scope.eachWeek[j].painScore += $scope.weeklyExercise[0].attributes.pain;
+            $scope.weeklyExercise.splice(0,1);
+          }
         }
-        $scope.eachWeek.push({'range': rangeDate.toDateString() + "-" + today.toDateString(),'date':today.toDateString(), 'thisWeeks': []});
-        while($scope.weeklyExercise.length >= 1){
-            var tempDate = new Date($scope.weeklyExercise[0].attributes.date.substr(0,10)).toDateString();
-            for(var j=0; j < $scope.eachWeek.length; j++){
-                    if (Date.parse(tempDate) < Date.parse($scope.eachWeek[j].date) && $scope.weeklyExercise[0] !== undefined) {
-                        $scope.eachWeek[j].thisWeeks.push($scope.weeklyExercise[0]);
-                        $scope.weeklyExercise.splice(0,1);
-                    }
-            }
-        }
+      }
     };
 
     $scope.setWeeklyExercises();
@@ -382,32 +392,37 @@ angular.module('HCAlpha.controllers', [])
       });
     };
 
-        var promise;
-        var t = 0;
+      var promise;
+      var t = 0;
 
-        $scope.mouseDown = function (x) {
-            if(t == 0) {
-                t = 1;
-                promise = $interval(function () {
-                    $scope.openIt(x);
-                    $interval.cancel(promise);
-                }, 1500);
-            }
+      $scope.mouseDown = function (x) {
+          if(t == 0) {
+              t = 1;
+              promise = $interval(function () {
+                  $scope.openIt(x);
+                  $interval.cancel(promise);
+              }, 1500);
+          }
 
-        };
+      };
 
-        $scope.mouseUp = function () {
-            t = 0;
-            $interval.cancel(promise);
+      $scope.mouseUp = function () {
+          t = 0;
+          $interval.cancel(promise);
 
-        };
+      };
 
-        $scope.openIt = function (x) {
-            if(t == 1){
-                t = 0;
-                $scope.open(x);
-            }
-        };
+      $scope.openIt = function (x) {
+          if(t == 1){
+              t = 0;
+              $scope.open(x);
+          }
+      };
+
+      $scope.viewWeek = function(x){
+        weekExercises.week = x;
+        $state.go("therapist.viewWeek");
+      }
 
   })
   .controller('modalCtrl', function($scope, $state, $modalInstance, exercise, urlID, patientObj, addedExercise) {
@@ -459,4 +474,8 @@ angular.module('HCAlpha.controllers', [])
     $scope.dismiss = function () {
       $modalInstance.dismiss('cancel');
     }
-  });
+  })
+    .controller('weeklyCtrl', function($scope, weekExercises){
+      $scope.thisWeek = weekExercises.week;
+      console.log($scope.thisWeek);
+    });

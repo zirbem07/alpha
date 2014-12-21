@@ -2,8 +2,8 @@
 angular.module('HCAlpha',
   [
     'ngTouch',
-      'ngAnimate',
-      'ngMaterial',
+    'ngAnimate',
+    'ngMaterial',
     'HCAlpha.controllers',
     'HCAlpha.services',
     'HCAlpha.directives',
@@ -15,7 +15,8 @@ angular.module('HCAlpha',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
     'googlechart',
-    'HCAlpha.filters'
+    'HCAlpha.filters',
+    'hmTouchEvents'
   ])
   .run(['ParseSDK', function(ParseService){
 
@@ -50,12 +51,17 @@ angular.module('HCAlpha',
         url: "/managePatient",
         templateUrl: "views/managePatient.html",
         controller: 'patientManageCtrl',
-            resolve: {
-                completedExercises: function(Patient) {
-                    return Patient.getCompletedExercises();
-                }
+          resolve: {
+            completedExercises: function(Patient) {
+                return Patient.getCompletedExercises();
             }
+          }
       })
+        .state('therapist.viewWeek', {
+          url: '/viewWeek/',
+          templateUrl: 'views/viewWeek.html',
+          controller: 'weeklyCtrl'
+        })
       .state('patient', {
         url: '/patient',
         templateUrl: 'views/patient.html',

@@ -28,23 +28,21 @@
 .aexTab{
 
 }
-@media only screen and (min-device-width: 768px) {
-    ::-webkit-scrollbar {
-        -webkit-appearance: none;
-    }
 
-    ::-webkit-scrollbar:vertical {
-        width: 15px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, .5);
-        border-radius: 10px;
-        border: 2px solid #ffffff;
-    }
-
-    ::-webkit-scrollbar-track {
-        border-radius: 10px;
-        background-color: #ffffff;
-    }
+::-webkit-scrollbar {
+    -webkit-appearance: none;
 }
+
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+.element::-webkit-scrollbar { width: 0 !important }
+.element { -ms-overflow-style: none; }

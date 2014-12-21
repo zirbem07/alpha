@@ -69,4 +69,7 @@ angular.module('HCAlpha.services', [])
                 dailyExercises.push(modalExercise);
             }
         };
+})
+.factory("weekExercises",function(){
+        return {};
 });
